@@ -15,7 +15,6 @@ function App() {
   const handleSpeedChange = () => {
     setPlaybackSpeed(prev=> prev >= 3? 1: prev+1);
   };
-
   return (
     <div className="main-body">
       <div className="row">
