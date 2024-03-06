@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./App.css";
 import Navbar from "./components/Navbar";
-import PlayerControls from "./components/PlayerControls"; // Import PlayerControls component
+import PlayerControls from "./components/PlayerControls"; 
 
 function App() {
   const [currentTime, setCurrentTime] = useState('00:00');
@@ -19,14 +19,14 @@ function App() {
     <div className="main-body">
       <div className="row">
         <div className="d-flex justify-content-center align-items-start">
-          <p className="text-center main-text">CAMB.AI</p>
+          <p className="text-center main-text">Audio-Player</p>
         </div>
       </div>
       <div className="row">
         <Navbar />
       </div>
       <div className="row">
-        {/* Render the PlayerControls component */}
+        
         <PlayerControls
           currentTime={currentTime}
           isPlaying={isPlaying}
