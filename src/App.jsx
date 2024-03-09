@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./App.css";
 import Navbar from "./components/Navbar";
 import PlayerControls from "./components/PlayerControls"; 
@@ -9,8 +9,17 @@ import 'rc-slider/assets/index.css';
 function App() {
   const [selectedInstruments, setSelectedInstruments] = useState([]);
 
+  useEffect(() => {
+    const slider = document.getElementsByClassName("rc-slider-handle")
+    const instrumentElementHeight = document.getElementById("instruments").clientHeight;
+    console.log(instrumentElementHeight, slider[0].clientHeight)
+    if(instrumentElementHeight > slider[0].clientHeight) {
+      slider[0].style = `height: ${instrumentElementHeight}px !important; right: 100%; transform: translateX(50%);`;
+    }
+  }, [selectedInstruments])
+
   const handleInstrumentSelect = (instrument, instrumentSound) => {
-    console.log("Handled", instrument)
+    
     setSelectedInstruments(prevSelected => [...prevSelected, instrument]);
   };
 
