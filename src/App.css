@@ -8,3 +8,8 @@
     color: white !important;
     margin-top: 30px;
 }
+.rc-slider-handle{
+    width: 0px !important ;
+    height: 30vh !important;
+    border-radius: 0 !important;
+}
