@@ -8,23 +8,14 @@ function Timeline({ selectedInstruments }) {
         Guitar: 0.0,
         Trumpet: 0.0
     })
-    // const [pianoDuration, setPianoDuration] = useState(0.0)
-    // const [drumsDuration, setDrumsDuration] = useState(0.0)
-    // const [guitarDuration, setGuitarDuration] = useState(0.0)
-    // const [trumpetDuration, setTrumpetDuration] = useState(0.0)
-
+   
     const instrumentColors = {
         Piano: 'bg-primary text-white', 
         Drum: 'bg-secondary text-white', 
         Guitar: 'bg-success text-white', 
         Trumpet:'bg-warning text-dark' 
       };
-    //   const audioDurations = {
-    //     Piano : getAudioDuration('/ragtime-logo-standard-version-116100.mp3'),
-    //     Drums : getAudioDuration('/amen-break-no-copyright-remake-120bpm-25924.mp3'),
-    //     Guitar : getAudioDuration('/acoustic-guitar-loop-f-91bpm-132687.mp3'),
-    //     Trumpet : getAudioDuration('/trumpet-89281.mp3')
-    //   }
+    
 
     useEffect(() => {
         const updateDuration = async () => {
@@ -51,7 +42,7 @@ function Timeline({ selectedInstruments }) {
             {selectedInstruments.map((value, index) => {
                 const width = (instrumentDuration[value] / 30) * 100 + '%';
                 return (
-                    <div key={index} className={`rounded text-center ${instrumentColors[value]} my-3 mx-3`}style={{ width }}>{value}</div>
+                    <div key={index} className={`rounded text-center ${instrumentColors[value]} my-3 `}style={{ width }}>{value}</div>
                 );
             })}
         </div>

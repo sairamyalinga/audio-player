@@ -26,19 +26,61 @@ function App() {
   const [currentTime, setCurrentTime] = useState('00:00');
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [handleValue, setHandleValue] = useState(30);
+
   // const [selectedInstrument, setSelectedInstrument] = useState(null);
 
   const handleTogglePlayPause = () => {
+    console.log("hiuefas");
+    console.log(isPlaying);
     setIsPlaying(prev => !prev);
+    console.log(isPlaying)
+ 
+      let value = 30;
+      setInterval(
+        function () {
+            value = value - 0.2
+            if (value >= 0) {
+              console.log(value);
+              setHandleValue(value);
+              console.log(handleValue);
+            } else {
+              setIsPlaying(false);
+            }
+        }, 200)
+
   };
+
+  // useEffect(() => {
+  //   let intervalId;
+  //   console.log(isPlaying);
+  //   if (isPlaying) {
+  //     intervalId = setInterval(() => {
+  //       setHandleValue(prevValue => {
+  //         // Calculate new value
+  //         const newValue = prevValue + 0.02;
+  //         // Stop timer when reaching the end (30 seconds)
+  //         if (newValue >= 30) {
+  //           setIsPlaying(false);
+  //           clearInterval(intervalId);
+  //           return 30;
+  //         }
+  //         // Otherwise, return the updated value
+  //         return newValue;
+  //       });
+  //     }, 1000 / 60); // 60 FPS for smoother animation
+  //   } else {
+  //     clearInterval(intervalId);
+  //   }
+
+  //   return () => clearInterval(intervalId);
+  // }, [isPlaying]);
 
   const handleSpeedChange = () => {
     setPlaybackSpeed(prev=> prev >= 3? 1: prev+1);
   };
 
-  // const handleInstrumentSelect = (instrument) => {
-  //   setSelectedInstrument(instrument); 
-  // };
+  
 
   return (
     <div className="main-body">
@@ -60,10 +102,9 @@ function App() {
         />
       </div>
 
-      <div className='row'>
-        <Slider min={0} max={20} className="mx-4" reverse defaultValue={20} />
+      <div className='col col-11 mx-5'>
+        <Slider min={0} max={30} className="" reverse defaultValue={30} value={handleValue} step={0.02} />
         <Timeline selectedInstruments={selectedInstruments} />
-        
       </div>
     </div>
   );
