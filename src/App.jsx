@@ -6,6 +6,8 @@ import Timeline from './components/Timeline';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
+var timerFn;
+
 function App() {
   const [selectedInstruments, setSelectedInstruments] = useState([]);
 
@@ -29,53 +31,36 @@ function App() {
   const [handleValue, setHandleValue] = useState(30);
 
   // const [selectedInstrument, setSelectedInstrument] = useState(null);
+  
 
   const handleTogglePlayPause = () => {
     console.log("hiuefas");
     console.log(isPlaying);
-    setIsPlaying(prev => !prev);
-    console.log(isPlaying)
- 
+    let currState  = isPlaying;
+    currState = !currState;
+    setIsPlaying(currState);
+
+    if (currState) {
       let value = 30;
-      setInterval(
+      console.log("TimerId set")
+      timerFn = setInterval(
         function () {
             value = value - 0.2
             if (value >= 0) {
-              console.log(value);
               setHandleValue(value);
-              console.log(handleValue);
             } else {
               setIsPlaying(false);
+              console.log("id:", timerFn)
+              clearInterval(timerFn);
             }
         }, 200)
+    } else {
+      console.log("else")
+      console.log(timerFn);
+      clearInterval(timerFn);
+    }
 
   };
-
-  // useEffect(() => {
-  //   let intervalId;
-  //   console.log(isPlaying);
-  //   if (isPlaying) {
-  //     intervalId = setInterval(() => {
-  //       setHandleValue(prevValue => {
-  //         // Calculate new value
-  //         const newValue = prevValue + 0.02;
-  //         // Stop timer when reaching the end (30 seconds)
-  //         if (newValue >= 30) {
-  //           setIsPlaying(false);
-  //           clearInterval(intervalId);
-  //           return 30;
-  //         }
-  //         // Otherwise, return the updated value
-  //         return newValue;
-  //       });
-  //     }, 1000 / 60); // 60 FPS for smoother animation
-  //   } else {
-  //     clearInterval(intervalId);
-  //   }
-
-  //   return () => clearInterval(intervalId);
-  // }, [isPlaying]);
-
   const handleSpeedChange = () => {
     setPlaybackSpeed(prev=> prev >= 3? 1: prev+1);
   };
