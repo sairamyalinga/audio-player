@@ -7,6 +7,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 var timerFn;
+var sliderFn;
 
 function App() {
   const [selectedInstruments, setSelectedInstruments] = useState([]);
@@ -30,34 +31,46 @@ function App() {
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [handleValue, setHandleValue] = useState(30);
 
-  // const [selectedInstrument, setSelectedInstrument] = useState(null);
-  
-
   const handleTogglePlayPause = () => {
-    console.log("hiuefas");
-    console.log(isPlaying);
+    // console.log("hiuefas");
+    // console.log(isPlaying);
     let currState  = isPlaying;
     currState = !currState;
     setIsPlaying(currState);
 
     if (currState) {
       let value = 30;
-      console.log("TimerId set")
-      timerFn = setInterval(
+      let seconds = 0;
+      let milliseconds = 0
+      // console.log("TimerId set")
+      sliderFn = setInterval(
         function () {
             value = value - 0.2
             if (value >= 0) {
               setHandleValue(value);
             } else {
-              setIsPlaying(false);
-              console.log("id:", timerFn)
-              clearInterval(timerFn);
+              clearInterval(sliderFn);
             }
         }, 200)
+
+        timerFn = setInterval(
+          function () {
+            milliseconds += 100
+              if (milliseconds<=30000){
+                const secondpart = milliseconds % 60;
+                if (milliseconds % 1000 === 0) {
+                  seconds++;
+                }
+                setCurrentTime(`${seconds < 10 ? '0' + seconds : seconds}:${secondpart < 10 ? '0' + secondpart : secondpart}`)
+              } else {
+                setIsPlaying(false);
+                console.log("id:", timerFn)
+                clearInterval(timerFn);
+              }
+          }, 100)
     } else {
-      console.log("else")
-      console.log(timerFn);
       clearInterval(timerFn);
+      clearInterval(sliderFn);
     }
 
   };
