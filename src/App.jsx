@@ -7,7 +7,6 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 var timerFn;
-var sliderFn;
 
 function App() {
   const [selectedInstruments, setSelectedInstruments] = useState([]);
@@ -32,8 +31,6 @@ function App() {
   const [handleValue, setHandleValue] = useState(30);
 
   const handleTogglePlayPause = () => {
-    // console.log("hiuefas");
-    // console.log(isPlaying);
     let currState  = isPlaying;
     currState = !currState;
     setIsPlaying(currState);
@@ -42,35 +39,30 @@ function App() {
       let value = 30;
       let seconds = 0;
       let milliseconds = 0
-      // console.log("TimerId set")
-      sliderFn = setInterval(
+      timerFn = setInterval(
         function () {
-            value = value - 0.2
+            milliseconds += 100
+            value = value - 0.1
             if (value >= 0) {
               setHandleValue(value);
             } else {
-              clearInterval(sliderFn);
+              clearInterval(timerFn);
             }
-        }, 200)
 
-        timerFn = setInterval(
-          function () {
-            milliseconds += 100
-              if (milliseconds<=30000){
-                const secondpart = milliseconds % 60;
-                if (milliseconds % 1000 === 0) {
-                  seconds++;
-                }
-                setCurrentTime(`${seconds < 10 ? '0' + seconds : seconds}:${secondpart < 10 ? '0' + secondpart : secondpart}`)
-              } else {
-                setIsPlaying(false);
-                console.log("id:", timerFn)
-                clearInterval(timerFn);
+            if (milliseconds<=30000){
+              const secondpart = milliseconds % 60;
+              if (milliseconds % 1000 === 0) {
+                seconds++;
               }
-          }, 100)
+              setCurrentTime(`${seconds < 10 ? '0' + seconds : seconds}:${secondpart < 10 ? '0' + secondpart : secondpart}`)
+            } else {
+              setIsPlaying(false);
+              console.log("id:", timerFn)
+              clearInterval(timerFn);
+            }
+        }, 100)
     } else {
       clearInterval(timerFn);
-      clearInterval(sliderFn);
     }
 
   };
@@ -101,7 +93,7 @@ function App() {
       </div>
 
       <div className='col col-11 mx-5'>
-        <Slider min={0} max={30} className="" reverse defaultValue={30} value={handleValue} step={0.02} />
+        <Slider min={0} max={30} className="" reverse defaultValue={30} value={handleValue} step={0.01} />
         <Timeline selectedInstruments={selectedInstruments} />
       </div>
     </div>
